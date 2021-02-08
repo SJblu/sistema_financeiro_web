@@ -1,12 +1,10 @@
-// CAMPO DE OBSERVAO (NAO OBRIGATORIO) NO MODAL PARA ADICIONAR OBSERVACOES GERAIS SOBRE O LANCAMENTO
-// AUTOMATICAMENTE PREENCHER OS VALORES APOS A VIRGULA NA HORA DE LANCAR
 // BOTAO DENTRO DO MODAL PARA SELECIONAR SE O LANCAMENTO É UMA RECEITA OU DESPESA
 // AO CLICAR NO BOTAO REMOVER, PERGUNTAR PARA USUARIO CONFIRMACAO
 // IMPLEMENTAR TEMA DARK
 // BOTAO PARA EDITAR LANCAMENTO NO MODAL
 // ANIMACAO NA ABERTURA DA JANELA DO MODAL
 // BOTAO SALVAR DO MODAL FICAR DESABILITADO ATÉ QUE OS CAMPOS OBRIGATORIOS ESTEJAM PREENCHIDOS
-
+// AUTOMATICAMENTE PREENCHER OS VALORES APOS A VIRGULA NA HORA DE LANCAR
 
 
 const Modal = {
@@ -97,8 +95,11 @@ const DOM = {
             <td class="description">${transaction.description}</td>
             <td class=${amountClass}>${amount}</td>
             <td class="date">${transaction.date}</td>
-            <td class="btn-transaction">
-                <img class="btn-note" src="./assets/note_icon.svg" alt="Observações" />
+            <td class="info-btn">
+                <div class="tooltip">
+                    <img class="btn-note" src="./assets/note_icon.svg" alt="Observações" />
+                    <span class="tooltiptext">${transaction.note}</span>
+                </div>
                 <img class="btn-minus" onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
             </td>
             `
@@ -107,7 +108,7 @@ const DOM = {
             <td class="description">${transaction.description}</td>
             <td class=${amountClass}>${amount}</td>
             <td class="date">${transaction.date}</td>
-            <td class="btn-transaction">
+            <td>
                 <img class="btn-note-disable" src="./assets/note_icon.svg" />
                 <img class="btn-minus" onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
             </td>
