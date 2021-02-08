@@ -1,10 +1,12 @@
-// BANCO DE DADOS EM ARQUIVO JSON SEPARADO
-// BOTAO SALVAR DO MODAL FICAR DESABILITADO ATÉ QUE OS CAMPOS OBRIGATORIOS ESTEJAM PREENCHIDOS
 // CAMPO DE OBSERVAO (NAO OBRIGATORIO) NO MODAL PARA ADICIONAR OBSERVACOES GERAIS SOBRE O LANCAMENTO
 // AUTOMATICAMENTE PREENCHER OS VALORES APOS A VIRGULA NA HORA DE LANCAR
 // BOTAO DENTRO DO MODAL PARA SELECIONAR SE O LANCAMENTO É UMA RECEITA OU DESPESA
+// AO CLICAR NO BOTAO REMOVER, PERGUNTAR PARA USUARIO CONFIRMACAO
 // IMPLEMENTAR TEMA DARK
 // BOTAO PARA EDITAR LANCAMENTO NO MODAL
+// ANIMACAO NA ABERTURA DA JANELA DO MODAL
+// BOTAO SALVAR DO MODAL FICAR DESABILITADO ATÉ QUE OS CAMPOS OBRIGATORIOS ESTEJAM PREENCHIDOS
+
 
 
 const Modal = {
@@ -86,14 +88,32 @@ const DOM = {
 
         const amount = Utils.formatCurrency(transaction.amount)
 
-        const html = `
+        const note = Utils.checkNote(transaction.note)
+
+        let html
+        
+        if (note) { html =
+            `
             <td class="description">${transaction.description}</td>
             <td class=${amountClass}>${amount}</td>
             <td class="date">${transaction.date}</td>
-            <td>
-            <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
+            <td class="btn-transaction">
+                <img class="btn-note" src="./assets/note_icon.svg" alt="Observações" />
+                <img class="btn-minus" onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
             </td>
-        `
+            `
+        } else { html =
+            `
+            <td class="description">${transaction.description}</td>
+            <td class=${amountClass}>${amount}</td>
+            <td class="date">${transaction.date}</td>
+            <td class="btn-transaction">
+                <img class="btn-note-disable" src="./assets/note_icon.svg" />
+                <img class="btn-minus" onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
+            </td>
+            `
+        }
+            console.log(transaction)
         return html;
     },
 
@@ -150,6 +170,14 @@ const Utils = {
         const splittedDate = date.split("-");
         
         return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+    },
+
+    checkNote(note) {
+        if (note === "") {
+            return false
+        } else {
+            return true
+        }
     }
     
 }
@@ -158,28 +186,32 @@ const Form = {
     description: document.querySelector('input#description'),
     amount: document.querySelector('input#amount'),
     date: document.querySelector('input#date'),
+    note: document.querySelector('input#note'),
 
     getValues(){
         return {
             description: this.description.value,
             amount: this.amount.value,
-            date: this.date.value
+            date: this.date.value,
+            note: this.note.value
         }
     },
 
     validateFields() {
         const { description, amount, date } = Form.getValues();
 
-        if (description.trim() === "" ||
-            amount.trim() === "" ||
-            date.trim() === "") {
-                throw new Error("Preencha todos os campos");
-        }
+        if (description.trim() === "") { throw new Error ("A Descrição é obrigatória*") }
+        if (amount.trim() === "") { throw new Error ("O Valor é obrigatório*") }
+        if (date.trim() === "") { throw new Error ("A Data é obrigatória*") }
+            // amount.trim() === "" ||
+            // date.trim() === "") {
+            //     throw new Error("Preencha todos os campos");
+        
 
     },
 
     formatValues() {
-        let { description, amount, date } = Form.getValues();
+        let { description, amount, date, note } = Form.getValues();
 
         amount = Utils.formatAmount(amount);
         date = Utils.formatDate(date);
@@ -187,7 +219,8 @@ const Form = {
         return {
             description,
             amount,
-            date
+            date,
+            note
         };
     },
 
@@ -200,6 +233,7 @@ const Form = {
         this.description.value = "";
         this.amount.value = "";
         this.date.value = "";
+        this.note.value = "";
     },
 
     submit(event) {

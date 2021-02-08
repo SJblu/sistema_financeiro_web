@@ -214,6 +214,33 @@ td.expense {
     color: #e92929;
 }
 
+td.btn-transaction {
+    text-align: center;
+}
+
+td img.btn-note {
+    padding-right: 1.5rem;
+    opacity: 0.4;
+}
+
+td img.btn-note:hover {
+    padding-right: 1.5rem;
+    opacity: 0.6;
+}
+
+td img.btn-note-disable {
+    padding-right: 1.5rem;
+    opacity: 0;
+}
+
+td img.btn-minus {
+    opacity: 0.5;
+}
+
+td img.btn-minus:hover {
+    opacity: 1;
+}
+
 
 /* Modal ======================== */
 .modal-overlay {

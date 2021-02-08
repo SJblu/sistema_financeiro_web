@@ -36,7 +36,7 @@
             </div>
             <div class="card total">
                 <h3>
-                    <span>Total</span>
+                    <span>Total Previsto</span>
                     <img src="./assets/total.svg" alt="Imagem de total">
                 </h3>
                 <p id="totalDisplay">R$ 0,00</p>
@@ -79,7 +79,7 @@
                             type="text"
                             id="description" 
                             name="description" 
-                            placeholder="Descrição">
+                            placeholder="Descrição*">
                     </div>
 
                     <div class="input-group">
@@ -91,7 +91,7 @@
                             step="0.01" 
                             id="amount" 
                             name="amount" 
-                            placeholder="0,00">
+                            placeholder="0,00*">
                         <small>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
                     </div>
 
@@ -103,6 +103,17 @@
                             type="date"
                             id="date" 
                             name="date">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label 
+                            class="sr-only" 
+                            for="note">Observações</label>
+                        <input 
+                            type="text" 
+                            id="note" 
+                            name="note" 
+                            placeholder="Observações">
                     </div>
                     
                     <div class="input-group actions">
